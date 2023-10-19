@@ -9,7 +9,7 @@ async function Home() {
 
   const blogPosts = await getBlogPostList();
 
-  console.log('Blogposts: ', blogPosts);
+  // console.log('Blogposts: ', blogPosts);
 
   const filesArray = fs.readdir('content', (err, files) => {
     if (err) throw err;
@@ -22,11 +22,12 @@ async function Home() {
         Latest Content:
       </h1>
 
-      {blogPosts.map(post => {
+      {blogPosts.map((post, id) => {
         const { slug, title, abstract, publishedOn } = post;
         return (
 
           <BlogSummaryCard
+            key={id}
             slug={slug}
             title={title}
             abstract={abstract}
