@@ -32,7 +32,7 @@ function RootLayout({ children }) {
 
   return (
     <html
-      lang="en"
+      lang='en'
       className={clsx(mainFont.variable, monoFont.variable)}
       data-color-theme={theme}
       style={theme === "light" ? LIGHT_TOKENS : DARK_TOKENS}
