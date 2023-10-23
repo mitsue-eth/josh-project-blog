@@ -2,10 +2,12 @@ import React from "react";
 import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
+import dynamic from "next/dynamic";
 
 import BlogHero from "@/components/BlogHero";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import CodeSnippet from "@/components/CodeSnippet";
+
+import COMPONENT_MAP from "@/helpers/mdx-components";
 
 import styles from "./postSlug.module.css";
 
@@ -43,7 +45,7 @@ async function BlogPost({ params }) {
         publishedOn={new Date(frontmatter.publishedOn)}
       />
       <div className={styles.page}>
-        <MDXRemote source={content} components={{ pre: CodeSnippet }} />
+        <MDXRemote source={content} components={COMPONENT_MAP} />
       </div>
     </article>
   );
