@@ -9,10 +9,6 @@ import CodeSnippet from "@/components/CodeSnippet";
 
 import styles from "./postSlug.module.css";
 
-const components = {
-  pre: (props) => <CodeSnippet {...props}>{props.children}</CodeSnippet>,
-};
-
 const cachedLoadBlogPost = React.cache(async (slug) => {
   console.log("Cached function is running");
   const rawContent = await fs.readFile(
@@ -47,7 +43,7 @@ async function BlogPost({ params }) {
         publishedOn={new Date(frontmatter.publishedOn)}
       />
       <div className={styles.page}>
-        <MDXRemote source={content} components={{ ...components }} />
+        <MDXRemote source={content} components={{ pre: CodeSnippet }} />
       </div>
     </article>
   );
