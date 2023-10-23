@@ -5,8 +5,13 @@ import matter from "gray-matter";
 
 import BlogHero from "@/components/BlogHero";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import CodeSnippet from "@/components/CodeSnippet";
 
 import styles from "./postSlug.module.css";
+
+const components = {
+  pre: (props) => <CodeSnippet {...props}>{props.children}</CodeSnippet>,
+};
 
 const cachedLoadBlogPost = React.cache(async (slug) => {
   console.log("Cached function is running");
@@ -42,7 +47,7 @@ async function BlogPost({ params }) {
         publishedOn={new Date(frontmatter.publishedOn)}
       />
       <div className={styles.page}>
-        <MDXRemote source={content} />
+        <MDXRemote source={content} components={{ ...components }} />
       </div>
     </article>
   );
