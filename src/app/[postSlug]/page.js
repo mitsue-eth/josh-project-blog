@@ -8,7 +8,8 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 
 import styles from "./postSlug.module.css";
 
-const cachedLoadBlogPost = React.cache(async function loadBlogPost(slug) {
+const cachedLoadBlogPost = React.cache(async (slug) => {
+  console.log("Cached function is running");
   const rawContent = await fs.readFile(
     path.join(process.cwd(), `/content/${slug}.mdx`),
     "utf8"
@@ -19,10 +20,18 @@ const cachedLoadBlogPost = React.cache(async function loadBlogPost(slug) {
   return { frontmatter, content };
 });
 
+export async function generateMetadata({ params }) {
+  // read route params
+  const { frontmatter } = await cachedLoadBlogPost(params.postSlug);
+
+  return {
+    title: frontmatter.title,
+    description: frontmatter.abstract,
+  };
+}
+
 async function BlogPost({ params }) {
   const { postSlug } = params;
-
-  // console.log(params);
 
   const { frontmatter, content } = await cachedLoadBlogPost(postSlug);
 
